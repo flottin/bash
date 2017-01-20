@@ -1,3 +1,0 @@
-#!/bin/bash
-echo dummy process for example
-sleep 60
