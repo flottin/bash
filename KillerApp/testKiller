@@ -1,24 +1,29 @@
 #!/bin/bash
 path=$(realpath KillerApp/.)
 
-echo "chmod 777 killerApp ? Type [y] if ok, [n] or [q] to quit ! "
-read killer
-if [ $killer = n ] || [ $killer = q ]; then
-    echo "You aborted !"
-    exit
+# manage rights for first 
+chmod -R 777 KillerApp && perms=777 || perms=false
+
+if [ $perms = '777' ]; then
+    echo "Good perms on KillerApp !"
+else
+    echo "chmod 777 killerApp ? Type [y] if ok, [n] or [q] to quit ! "
+    read killer
+    if [ $killer = n ] || [ $killer = q ]; then
+        echo "You aborted !"
+        exit
+    fi
+    if [ $killer = y ] ; then
+        sudo chmod  -R 777 $path
+    fi
 fi
 
-if [ $killer = y ] ; then
-    sudo chmod  -R 777 $path
-fi
-
-
+# test 2O process
 echo "Test with  20 processes"
 for i in {1..20}
 do 
 $path/dummyKiller & 
 done
-
 echo $path/'killer dummy'
 $path/killer dummy
 
@@ -29,6 +34,7 @@ if [ $killer = n ] || [ $killer = q ]; then
     exit
 fi
 
+# test 1 process
 if [ $killer = y ] ; then
     for i in {1..1}
         do 
@@ -39,6 +45,7 @@ if [ $killer = y ] ; then
         $path/killer dummy
 fi
 
+#without any process
 echo "And then without any dummy ? Type [y] if ok, [n] or [q] to quit ! "
 read killer
 if [ $killer = n ] || [ $killer = q ]; then
