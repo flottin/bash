@@ -1,5 +1,0 @@
-#!/bin/bash
-
-echo dummy process for example 
-
-read nothing 
