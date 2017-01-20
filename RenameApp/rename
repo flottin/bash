@@ -1,0 +1,32 @@
+#!/bin/bash
+
+
+mkdir ./export
+
+pathToFile="./*.*";
+if [ -n "$1" ];
+        then
+        nameToChange=$1;
+fi
+
+for files in $pathToFile
+ do
+    cmdClean="tr -d \"'\""
+    cmdCleanRparenthesis="tr -d \"(\""
+    cmdCleanRparenthesis="tr -d \"(\""
+    cmdCleanLparenthesis="tr -d \")\""
+    cmdCleanHyphen="sed s/_-_/_/g"
+    cmdCleanName="sed s/${nameToChange}_/${nameToChange}-/g"
+    cmdCleanUnderscore="tr "[:blank:]" "_""
+
+    if [ -n "$nameToChange" ];
+        then
+        cmd="$(echo  $files | $cmdCleanRparenthesis | $cmdCleanLparenthesis | $cmdCleanUnderscore | $cmdClean | $cmdCleanHyphen | $cmdCleanName )";
+    else
+    cmd="$(echo  $files | $cmdCleanRparenthesis | $cmdCleanLparenthesis | $cmdCleanUnderscore | $cmdClean | $cmdCleanHyphen )";
+    fi
+    cmd2="$(echo cp \"$files\" ./export/$(echo $(basename $cmd)))";
+    eval $cmd2
+    echo $cmd2
+done
+
