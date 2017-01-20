@@ -1,12 +1,54 @@
 #!/bin/bash
+path=$(realpath KillerApp/.)
 
-#~ cd test
+echo "chmod 777 killerApp ? Type [y] if ok, [n] or [q] to quit ! "
+read killer
+if [ $killer = n ] || [ $killer = q ]; then
+    echo "You aborted !"
+    exit
+fi
 
-echo "Spawning 100 processes"
-#~ for i in {1..100}
+if [ $killer = y ] ; then
+    sudo chmod  -R 777 $path
+fi
 
-path=$(realpath Killer/.)
-for i in {1..150}
+
+echo "Test with  20 processes"
+for i in {1..20}
 do 
-$path/KillerDummy & 
+$path/dummyKiller & 
 done
+
+echo $path/'killer dummy'
+$path/killer dummy
+
+echo "Now let's test with one dummy process ? Type [y] if ok, [n] or [q] to quit ! "
+read killer
+if [ $killer = n ] || [ $killer = q ]; then
+    echo "You aborted !"
+    exit
+fi
+
+if [ $killer = y ] ; then
+    for i in {1..1}
+        do 
+        $path/dummyKiller & 
+        done
+
+        echo $path/'killer dummy'
+        $path/killer dummy
+fi
+
+echo "And then without any dummy ? Type [y] if ok, [n] or [q] to quit ! "
+read killer
+if [ $killer = n ] || [ $killer = q ]; then
+    echo "You aborted !"
+    exit
+fi
+
+if [ $killer = y ] ; then
+    echo $path/'killer dummy'
+    $path/killer dummy
+fi
+
+
