@@ -20,11 +20,16 @@ sh KillerApp/killer
 will display
 
 ```
-
+tu va voir
 
 ```
 
-## 2. grab cacaoweb
+## 2.rename
+
+rename massively files
+
+
+## 3. grab cacaoweb
 
 grab a season or a serie if exists
 and if you got an account
