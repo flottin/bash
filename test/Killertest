@@ -8,5 +8,5 @@ echo "Spawning 100 processes"
 
 for i in {1..150}
 do 
-./KillerProcess & 
+./test & 
 done
