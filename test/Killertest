@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#~ cd test
+
+echo "Spawning 100 processes"
+#~ for i in {1..100}
+
+
+for i in {1..150}
+do 
+./KillerProcess & 
+done
