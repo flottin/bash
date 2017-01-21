@@ -2,9 +2,10 @@
 
 RED='\033[0;31m'
 NC='\033[0m' # No Color
+sep="\n${RED}-------------------------------------------------------------------------${NC}\n"
 
 if [ -z "$1" ]; then 
-    echo "usage killer [NAME]"
+    alert "usage killer [NAME]"
     exit
 fi
 
@@ -12,23 +13,26 @@ function killpid {
     sudo kill -9 ${1} && echo "PID ${1} killed !" || echo "PID ${1} killed !"
 }
 
+function alert {
+    printf $sep
+    printf "${RED}$1${NC}";
+    printf $sep
+}
 
 ps -x | grep $1 |grep -v grep |grep -v killer
 pidcount=$(ps -x | grep $1 |grep -v grep  |grep -v killer | awk '{print $1}' | wc -c )
 pidnum=$(ps -x | grep $1 |grep -v grep |grep -v killer | awk '{print $1}' )
 if [ -z "$pidnum" ] ; then
-    echo "No pid found !"
+    alert "No pid found !"
     exit;
 fi
 
 
 if [ $pidcount -gt '7' ]; then
-
-    printf "There are several PID ! "
-    printf "Enter the PID to kill, type [n] or [q] to quit or [a] to killall ! "
+    alert "Several PIDs' ! Enter PID to kill, [n] or [q] to quit, [a] to killall ! "
     read killer
     if [ $killer = n ] || [ $killer = q ]; then
-        echo "You aborted !"
+        alert "You aborted !"
         exit
     fi
     
@@ -39,10 +43,10 @@ if [ $pidcount -gt '7' ]; then
     fi
     
     killpid ${killer}
-    echo "It remains following PID ! Type [y] to show them, [n] or [q] to quit ! "
+    alert "Remains following PID ! [y] to show them, [n] or [q] to quit ! "
     read killer
     if [ $killer = n ] || [ $killer = q ]; then
-        echo "You aborted !"
+        alert "You aborted !"
         exit
     fi
     
@@ -51,7 +55,7 @@ if [ $pidcount -gt '7' ]; then
         exit;
     fi
 else
-    printf "Kill ${RED}$pidnum${NC} by pressing [y] or [n] or [q] to quit ! \n"
+    alert "Kill ${RED}$pidnum${NC} with [y], quit with [n] or [q]  ! \n"
     read killer
     if [ $killer = y ] ; then 
         killpid ${pidnum}
@@ -59,12 +63,12 @@ else
     
     fi
     if [[ $key = n ]]; then
-        echo " was pressed ! Aborted !"
+        alert " was pressed ! Aborted !"
        exit
     fi
 
     if [[ $key = q ]]; then
-        echo " was pressed ! Aborted !"
+        alert " was pressed ! Aborted !"
        exit
     fi
     
