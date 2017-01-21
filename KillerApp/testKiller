@@ -1,13 +1,23 @@
 #!/bin/bash
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+sep="\n${RED}-------------------------------------------------------------------------${NC}\n"
+
+
+function alert {
+    printf $sep
+    printf "${RED}$1${NC}";
+    printf $sep
+}
 path=$(realpath KillerApp/.)
 
 # manage rights for first 
 chmod -R 777 KillerApp && perms=777 || perms=false
 
 if [ $perms = '777' ]; then
-    echo "Good perms on KillerApp !"
+    alert "Good perms on KillerApp !"
 else
-    echo "chmod 777 killerApp ? Type [y] if ok, [n] or [q] to quit ! "
+    alert "chmod 777 killerApp ? Type [y] if ok, [n] or [q] to quit ! "
     read killer
     if [ $killer = n ] || [ $killer = q ]; then
         echo "You aborted !"
@@ -19,15 +29,15 @@ else
 fi
 
 # test 2O process
-echo "Test with  20 processes"
+alert "Test with  20 processes"
 for i in {1..20}
 do 
 $path/dummyKiller & 
 done
-echo $path/'killer dummy'
+alert $path/'killer dummy'
 $path/killer dummy
-
-echo "Now let's test with one dummy process ? Type [y] if ok, [n] or [q] to quit ! "
+#~ alert $info
+alert "Now let's test with one dummy process ? Type [y] if ok, [n] or [q] to quit ! "
 read killer
 if [ $killer = n ] || [ $killer = q ]; then
     echo "You aborted !"
@@ -41,20 +51,20 @@ if [ $killer = y ] ; then
         $path/dummyKiller & 
         done
 
-        echo $path/'killer dummy'
+        alert $path/'killer dummy'
         $path/killer dummy
 fi
 
 #without any process
-echo "And then without any dummy ? Type [y] if ok, [n] or [q] to quit ! "
+alert "And then without any dummy ? Type [y] if ok, [n] or [q] to quit ! "
 read killer
 if [ $killer = n ] || [ $killer = q ]; then
-    echo "You aborted !"
+    alert "You aborted !"
     exit
 fi
 
 if [ $killer = y ] ; then
-    echo $path/'killer dummy'
+    alert $path/'killer dummy'
     $path/killer dummy
 fi
 
