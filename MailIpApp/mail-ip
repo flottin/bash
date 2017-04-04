@@ -1,14 +1,15 @@
 #!/bin/bash
 
+# get external ip
 curl icanhazip.com > /tmp/iptoday.txt
 
-
+# path to ip file
 iptoday=/tmp/iptoday.txt
 iptmp=/tmp/ip.txt
 
+# compare ip files
 shatoday=$( sha256sum "$iptoday" | awk '{print $1}')
 shatmp=$( sha256sum "$iptmp" | awk '{print $1}')
-
 
 # Compare the checksums
 if [ "x$shatoday" = "x$shatmp" ]
