@@ -3,6 +3,12 @@
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 sep="\n${RED}-------------------------------------------------------------------------${NC}\n"
+function alert {
+    printf $sep
+    printf "${RED}$1${NC}";
+    printf $sep
+}
+
 
 if [ -z "$1" ]; then 
     alert "usage killer [NAME]"
@@ -11,12 +17,6 @@ fi
 
 function killpid {
     sudo kill -9 ${1} && echo "PID ${1} killed !" || echo "PID ${1} killed !"
-}
-
-function alert {
-    printf $sep
-    printf "${RED}$1${NC}";
-    printf $sep
 }
 
 ps -x | grep $1 |grep -v grep |grep -v killer
