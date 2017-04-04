@@ -20,7 +20,7 @@ sh KillerApp/killer
 will display
 
 ```
-tu va voir
+tu vas voir
 
 ```
 
@@ -28,8 +28,24 @@ tu va voir
 
 rename massively files
 
+## 3.Mail Ip
 
-## 3. grab cacaoweb
+send external IP to appropriate mail
+
+```
+sh MailIpApp/mail-ip
+```
+
+it needs to be run as a cron :
+
+
+# m h  dom mon dow   command
+*/1 * * * * /home/flottin/bash/MailIpApp/mail-ip > /dev/null 2>&1 || true
+
+
+
+
+## 4. grab cacaoweb => NOT IMPLEMENTED
 
 grab a season or a serie if exists
 and if you got an account
